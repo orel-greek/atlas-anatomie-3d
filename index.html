@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Anatomie 3D</title>
+    <meta name="description" content="Atlas d'anatomie 3D : moelle épinière, nerfs, bassin et membres inférieurs." />
+    <meta name="theme-color" content="#14171c" />
+    <link rel="icon" href="./icone.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <script type="module" crossorigin src="./assets/index-C8jb1zOP.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-ae5Y-YKV.css">
+  </head>
+  <body>
+    <header class="entete">
+      <div class="marque"><img src="./icone.svg" alt="" width="22" height="22" /> Anatomie 3D</div>
+      <nav class="onglets" role="tablist">
+        <button class="onglet actif" data-onglet="explorer" role="tab">Explorer</button>
+        <button class="onglet" data-onglet="parcours" role="tab">Parcours de rééducation</button>
+      </nav>
+      <div class="aide-raccourcis" title="Raccourcis clavier">
+        Clic : sélectionner · Double-clic : centrer · H : masquer · I : isoler · A : tout afficher · Échap : désélectionner
+      </div>
+    </header>
+
+    <main class="disposition">
+      <aside class="panneau gauche" id="panneau-gauche">
+        <button class="fermer-tiroir" aria-label="Fermer le panneau"></button>
+        <section class="vue-onglet" id="onglet-explorer">
+          <h2>Calques</h2>
+          <div id="calques"></div>
+          <h2>Recherche</h2>
+          <input id="recherche" type="search" placeholder="Ex. : moyen fessier, T3, fibula…" autocomplete="off" />
+          <ul id="resultats" class="resultats"></ul>
+          <h2>Structures</h2>
+          <div id="arbre" class="arbre"></div>
+          <p class="attribution-panneau">Modèles : <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> (licence CC BY-SA 4.0), dérivé de <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/" target="_blank" rel="noopener">BodyParts3D</a> © The Database Center for Life Science. Usage pédagogique, pas un avis médical.</p>
+        </section>
+        <section class="vue-onglet cache" id="onglet-parcours">
+          <p class="intro">Chaque parcours met en évidence les structures sollicitées par un exercice ou concernées par une question. Les liens entre exercices et muscles sont une lecture anatomique, à confirmer avec la kinésithérapeute.</p>
+          <div id="liste-parcours"></div>
+          <button id="quitter-parcours" class="bouton large cache">Quitter le parcours</button>
+        </section>
+      </aside>
+
+      <section class="scene">
+        <div id="visionneuse"></div>
+        <div class="barre-outils">
+          <div class="groupe-outils">
+            <button data-vue="face">Face</button>
+            <button data-vue="dos">Dos</button>
+            <button data-vue="gauche" title="Côté gauche du corps">Gauche</button>
+            <button data-vue="droite" title="Côté droit du corps">Droite</button>
+            <button data-vue="dessus">Dessus</button>
+          </div>
+          <div class="groupe-outils">
+            <button id="recentrer" title="Recadrer sur ce qui est visible">Recadrer</button>
+            <button id="tout-afficher" title="Raccourci : A">Tout afficher</button>
+          </div>
+          <div class="groupe-outils">
+            <label class="bascule"><input type="checkbox" id="coupe" /> Coupe sagittale</label>
+            <input type="range" id="coupe-position" min="-150" max="150" value="0" step="1" disabled title="Position de la coupe" />
+            <label class="bascule"><input type="checkbox" id="etiquettes" checked /> Étiquettes</label>
+          </div>
+        </div>
+        <div id="chargement" class="chargement">
+          <div class="chargement-texte">Chargement des modèles…</div>
+          <div class="jauge"><div id="jauge-remplie"></div></div>
+        </div>
+        <div id="infobulle" class="infobulle cache"></div>
+        <footer class="attribution">
+          Modèles : <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> (licence CC BY-SA 4.0), dérivé de <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/" target="_blank" rel="noopener">BodyParts3D</a> © The Database Center for Life Science. Modèles convertis, traduits et complétés de repères. Usage pédagogique, pas un avis médical.
+        </footer>
+      </section>
+
+      <aside class="panneau droite" id="panneau-fiche">
+        <button class="fermer-tiroir" aria-label="Fermer le panneau"></button>
+        <div id="fiche-parcours" class="fiche-parcours cache"></div>
+        <div id="fiche" class="fiche">
+          <p class="vide">Cliquez sur une structure pour afficher sa fiche.</p>
+        </div>
+      </aside>
+    </main>
+
+    <nav class="barre-mobile">
+      <button data-tiroir="explorer">Explorer</button>
+      <button data-tiroir="parcours">Parcours</button>
+      <button data-tiroir="fiche">Fiche</button>
+    </nav>
+
+  </body>
+</html>
