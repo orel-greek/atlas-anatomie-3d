@@ -9,15 +9,15 @@
     <meta name="theme-color" content="#14171c" />
     <link rel="icon" href="./icone.svg" type="image/svg+xml" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <script type="module" crossorigin src="./assets/index-C8jb1zOP.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-ae5Y-YKV.css">
+    <script type="module" crossorigin src="./assets/index-CIQwZisk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-C6FIGi91.css">
   </head>
   <body>
     <header class="entete">
       <div class="marque"><img src="./icone.svg" alt="" width="22" height="22" /> Anatomie 3D</div>
       <nav class="onglets" role="tablist">
         <button class="onglet actif" data-onglet="explorer" role="tab">Explorer</button>
-        <button class="onglet" data-onglet="parcours" role="tab">Parcours de rééducation</button>
+        <button class="onglet" data-onglet="parcours" role="tab">Parcours</button>
       </nav>
       <div class="aide-raccourcis" title="Raccourcis clavier">
         Clic : sélectionner · Double-clic : centrer · H : masquer · I : isoler · A : tout afficher · Échap : désélectionner
@@ -35,10 +35,17 @@
           <ul id="resultats" class="resultats"></ul>
           <h2>Structures</h2>
           <div id="arbre" class="arbre"></div>
+          <div id="donnees-perso" hidden>
+            <h2>Données personnelles</h2>
+            <p class="discret" id="etat-perso"></p>
+            <input type="file" id="fichier-perso" accept="application/json,.json" hidden />
+            <button id="importer-perso" class="bouton large"></button>
+            <button id="effacer-perso" class="bouton large cache">Effacer de cet appareil</button>
+          </div>
           <p class="attribution-panneau">Modèles : <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noopener">Z-Anatomy</a> (licence CC BY-SA 4.0), dérivé de <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/" target="_blank" rel="noopener">BodyParts3D</a> © The Database Center for Life Science. Usage pédagogique, pas un avis médical.</p>
         </section>
         <section class="vue-onglet cache" id="onglet-parcours">
-          <p class="intro">Chaque parcours met en évidence les structures sollicitées par un exercice ou concernées par une question. Les liens entre exercices et muscles sont une lecture anatomique, à confirmer avec la kinésithérapeute.</p>
+          <p class="intro">Chaque parcours met en évidence les structures sollicitées par un exercice ou concernées par une question. Les liens entre exercices et muscles sont une lecture anatomique, à confirmer avec la kinésithérapeute. Une étiquette grise en pointillés désigne une structure cachée derrière une autre : tourner la vue pour la voir.</p>
           <div id="liste-parcours"></div>
           <button id="quitter-parcours" class="bouton large cache">Quitter le parcours</button>
         </section>
@@ -59,9 +66,18 @@
             <button id="tout-afficher" title="Raccourci : A">Tout afficher</button>
           </div>
           <div class="groupe-outils">
-            <label class="bascule"><input type="checkbox" id="coupe" /> Coupe sagittale</label>
+            <label class="bascule"><input type="checkbox" id="coupe" /> Coupe</label>
+            <select id="coupe-type" title="Plan de coupe : sagittale (de profil) ou transversale (vue d'en bas, comme une coupe axiale d'IRM : l'avant du corps en haut de l'image, son côté droit à gauche)">
+              <option value="sagittale">sagittale</option>
+              <option value="transversale">transversale</option>
+            </select>
             <input type="range" id="coupe-position" min="-150" max="150" value="0" step="1" disabled title="Position de la coupe" />
+            <span id="coupe-niveau" class="niveau-coupe" hidden title="Niveau vertébral du plan de coupe. Les segments de la moelle sont décalés vers le haut par rapport aux vertèbres : au niveau des vertèbres T11 à L1 se trouvent les segments lombaires et sacrés."></span>
             <label class="bascule"><input type="checkbox" id="etiquettes" checked /> Étiquettes</label>
+            <label class="bascule" title="Flèche de l'insertion vers l'origine du muscle sélectionné : le sens où il tire"><input type="checkbox" id="traction" /> Traction</label>
+          </div>
+          <div class="groupe-outils" id="groupe-version">
+            <button id="version-precedente" title="Ouvrir la version du 9 octobre 2026, gardée pour comparer">Version 1</button>
           </div>
         </div>
         <div id="chargement" class="chargement">
@@ -81,6 +97,8 @@
           <p class="vide">Cliquez sur une structure pour afficher sa fiche.</p>
         </div>
       </aside>
+      <div class="poignee-largeur" data-panneau="gauche" title="Glisser pour élargir le panneau ; double-clic : largeur d'origine"></div>
+      <div class="poignee-largeur" data-panneau="droite" title="Glisser pour élargir le panneau ; double-clic : largeur d'origine"></div>
     </main>
 
     <nav class="barre-mobile">
